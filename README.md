@@ -194,6 +194,22 @@ this.$_toPath('/me/me/me',data)
 
 
 
+#### $_call
+
+调起微信拨打电话功能
+
+js调用
+
+```javascript
+this.$_call('024-1544545')
+```
+
+wxml中调用
+
+```html
+<view bindtap='$_call' data-phone='024-1544545'>打电话</view>
+```
+
 
 
 
