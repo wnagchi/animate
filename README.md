@@ -1,6 +1,23 @@
+#### v0.2.19
+
 ## 引入
 
 ```javascript
+//app.js
+const {animatePage}=require('utils/animate.min.js').default
+
+App({
+  animatePage
+
+})
+
+
+
+
+
+
+
+//xxxx.js
 const app=getApp()
 app.animatePage({
     data: {
@@ -120,6 +137,10 @@ this.getHeight('.xxxxxx')
 
 
 
+
+
+
+
 #### getNode:
 
 基本和getHeight用法相同
@@ -136,6 +157,10 @@ this.getHeight('.xxxxxx')
 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0208/171044_107c05e0_2298050.png "1612763326550.png")
+
+
+
+
 
 
 
@@ -162,6 +187,10 @@ this.getWxImg('https://xxxxxx.png').then(res=>{
 
 
 
+
+
+
+
 #### $_prePageToData
 
 往前一页data中塞值并且返回之前页
@@ -180,17 +209,92 @@ this.$_prePageToData('key','value',true)
 
 
 
+
+
 #### $_toPath
 
 带参数跳转
 
+js调用：
+
 ```javascript
-let data={
-    productId:1,
-    fromPage:'商品详情页'
-}
-this.$_toPath('/me/me/me',data)
+this.$_toPath({
+    path:'/me/me/me',
+    toType:'to',
+    toData:{
+        keys:'value'
+    }
+})
 ```
+
+wxml中调用：
+
+```html
+<view 
+      data-path='/me/me/me' 
+      data-to-type='to' 
+      data-to-data='{{details}}'
+      bindtap='$_toPath'
+      >跳转到个人中心</view>
+
+<view 
+      data-path='/me/me/me' 
+      data-to-type='offTo' 
+      bindtap='$_toPath'
+      >关闭当前页并跳转到个人中心</view>
+```
+
+**传递对象内参数：**
+
+path：跳转路径
+
+toData：跳转传递的参数
+
+toType：跳转类型
+
+​	可接受的跳转类型缩写：
+
+-  toTab  =>switchTab（跳转至tab页 关闭其他所有非tab页）
+- re         =>reLaunch（关闭所有页跳转至目标页）
+-  offTo   =>redirectTo（关闭当前页 跳转至其他非tab页）
+-  to        =>navigateTo（跳转至其他非tab页）
+-  back   =>navigateBack（返回上一页）
+
+**注意：**
+
+​	toType为back时 返回上一页 ，并在前一页创建$backData 将toData赋值给该字段
+
+  
+
+**提供跳转拦截功能**
+
+```
+$_toPath_before(e){   
+	console.log(e)   
+	
+	
+	return false
+	
+	return{
+		path:'',
+		toType:'',
+		toData:{}
+	}
+	
+},
+```
+
+return false为拦截
+
+return {path:'xxxxxx'}可改变相关属性
+
+
+
+
+
+
+
+
 
 
 
@@ -278,23 +382,11 @@ data-radio：是否为单选  默认为多选
 
 
 
-#### $_toPage
+#### ~~$_toPage~~
 
-跳转
+统一修改为 $_toPath方法使用
 
-```html
-<view 
-      data-path='/me/me/me' 
-      data-to-type='to' 
-      bindtap='$_toPage'
-      >跳转到个人中心</view>
-
-<view 
-      data-path='/me/me/me' 
-      data-to-type='lunch' 
-      bindtap='$_toPage'
-      >关闭当前页并跳转到个人中心</view>
-```
+~~跳转~~
 
 
 
